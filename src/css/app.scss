@@ -1,0 +1,70 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color:#333;
+
+    margin:20px;
+}
+
+a {
+    color: #333;
+}
+
+.Gallery {
+    flex-flow: row wrap;
+    display: flex;
+
+    &__item {
+        flex: auto;
+        width: 200px;
+        margin: 0 2px 1.5em 2px;
+
+        text-align: center;
+
+    }
+
+    a {
+        text-decoration:none;
+    }
+
+    &__image {
+        width: 100%;
+        height: auto;
+    }
+
+    &__text {
+
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .Gallery__item { margin: 0; }
+}
+
+
+.Breadcrumb {
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 3rem;
+
+    &__link {
+        text-decoration:none;
+    }
+
+    &__separator {
+        padding:0 10px;
+        font-size:.8em;
+        color:#666;
+    }
+
+    &__current {
+        font-size: 3rem;
+    }
+}

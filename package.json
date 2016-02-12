@@ -1,0 +1,50 @@
+{
+  "name": "simple-photo-gallery",
+  "preferGlobal": true,
+  "version": "1.0.0",
+  "author": "Stéphane Goetz <stephane.goetz@onigoetz.ch>",
+  "description": "Simple Photo Gallery",
+  "contributors": [
+    {
+      "name": "Stéphane Goetz",
+      "email": "stephane.goetz@onigoetz.ch"
+    }
+  ],
+  "keywords": [
+    "photo",
+    "gallery"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.5.1",
+    "babel-loader": "^6.2.2",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "cssnano": "^3.5.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-connect-php": "0.0.7",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^6.0.1",
+    "gulp-rename": "~1.2.0",
+    "gulp-uglify": "~0.2.1",
+    "gulp-util": "^3.0.7",
+    "opn": "^4.0.0",
+    "postcss": "^5.0.5",
+    "postcss-cssnext": "^2.1.0",
+    "postcss-import": "^8.0.2",
+    "postcss-reporter": "^1.2.1",
+    "postcss-scss": "^0.1.3",
+    "postcss-url": "^5.0.0",
+    "precss": "^1.3.0",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-photo-gallery": "^3.0.3"
+  }
+}

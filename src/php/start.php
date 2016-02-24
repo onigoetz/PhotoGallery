@@ -10,7 +10,6 @@ include __DIR__ . '/functions.php';
 // ---------------------------------------------------------------------------------------------------------------------
 $app = new \Slim\Slim(
     array(
-        'view' => new CustomView('layout.php'),
         'templates.path' => 'views',
     )
 );

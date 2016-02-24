@@ -38,7 +38,7 @@ class IndexCreator {
     }
 
     protected function getThumb(Node $folder) {
-        if ($folder->getType() == 'tome') {
+        if ($folder->getType() == 'gallery') {
             $image_extensions_allowed = array('jpg', 'jpeg', 'png', 'gif');
 
             $directory = new DirectoryIterator(GALLERY_ROOT . '/' . $folder->getPath());

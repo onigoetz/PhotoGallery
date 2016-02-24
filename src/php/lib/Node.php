@@ -30,7 +30,7 @@ class Node implements Countable {
 
     public function getType()
     {
-        return ($this->count() == 0)? 'tome' : 'dir';
+        return ($this->count() == 0)? 'gallery' : 'dir';
     }
 
     public function getParent()

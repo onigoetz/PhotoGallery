@@ -46,7 +46,7 @@ module.exports = function (gulp) {
         }).listen(8080, "localhost", function (err) {
             if (err) throw new gutil.PluginError("webpack-dev-server", err);
             gutil.log("[webpack-dev-server]", "open http://localhost:8080/webpack-dev-server/index.html for debug");
-            require('opn')("http://localhost:8080/index.html");
+            require('opn')("http://localhost:8080");
         });
     });
 };

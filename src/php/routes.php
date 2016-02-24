@@ -1,41 +1,78 @@
 <?php
-
 use Imagine\Image\Box;
+
+function getBreadCrumb($parent, $title)
+{
+    $breadbcrumb = [];
+
+    if ($parent) {
+        $parents = [$parent];
+        while ($parent = $parent->getParent()) {
+            $parents[] = $parent;
+        }
+
+        $parents = array_reverse($parents);
+
+        $breadbcrumb = array_map(
+            function (Node $item) {
+                $url = $item instanceof Root ? "" : "list/{$item->getPath()}";
+                return ['url' => url($url), 'title' => $item->getName()];
+            },
+            $parents
+        );
+    }
+
+    $breadbcrumb[] = ['title' => $title];
+
+    return $breadbcrumb;
+}
+
 
 $app->get(
     '/',
     function () use ($app) {
-
-        $data = getGallery()->getChildren();
-
-        foreach ($data as $key => $row) {
-            $names[$key] = ucfirst($row->getName());
-        }
-        array_multisort($names, SORT_ASC, $data);
-
-        return $app->render('index.php', array('title' => 'Home', 'data' => $data));
+        return $app->render('index.php');
     }
 );
 
 $app->get(
-    '/list/:list',
+    '/api/list/:list',
     function ($query) use ($app) {
-        $query = standardize_unicode($query);
-        $data = search(getGallery(), $query);
-        $parent = $data[0]->getParent()->getParent();
+
+        $gallery = getGallery();
+        $parent = null;
+        $title = "Home";
+        if ($query == '') {
+            $data = $gallery->getChildren();
+        } else {
+            $query = standardize_unicode($query);
+            $data = search($gallery, $query);
+            $parent = $data[0]->getParent()->getParent();
+            $end = explode('/', $query);
+            $title = end($end);
+        }
 
         foreach ($data as $key => $row) {
             $names[$key] = ucfirst($row->getName());
         }
         array_multisort($names, SORT_ASC, $data);
 
-        $end = explode('/', $query);
-        return $app->render('list.php', array('title' => end($end), 'data' => $data, 'parent' => $parent));
+        \SlimJson\Middleware::inject();
+        return $app->render(
+            200,
+            [
+                'data' => [
+                    'title' => $title,
+                    'data' => array_map(function ($item) { return $item->toArray(); }, $data),
+                    'breadcrumb' => getBreadcrumb($parent, $title)
+                ]
+            ]
+        );
     }
 )->conditions(array('list' => '.*'));
 
 $app->get(
-    '/book/:book',
+    '/api/gallery/:book',
     function ($book) use ($app) {
         $book = standardize_unicode($book);
 
@@ -62,8 +99,6 @@ $app->get(
 
             $src = str_replace(GALLERY_ROOT, '', $fullPath);
 
-
-
             $pages[] = [
                 'src' => image('medium', $src),
                 'width' => $size->getWidth(),
@@ -76,7 +111,7 @@ $app->get(
         }
 
         $ps = array();
-        foreach($pages as $key => $page) {
+        foreach ($pages as $key => $page) {
             $ps[$key] = $page['src'];
         }
         array_multisort($ps, SORT_NATURAL, $pages);
@@ -85,6 +120,28 @@ $app->get(
         $parent = $parent_folder[0]->getParent();
 
         $end = explode('/', $book);
-        return $app->render('book.php', array('title' => end($end), 'book' => $pages, 'parent' => $parent));
+        $title = end($end);
+
+        \SlimJson\Middleware::inject();
+        return $app->render(
+            200,
+            [
+                'data' => [
+                    'title' => $title,
+                    'data' => $pages,
+                    'breadcrumb' => getBreadcrumb($parent, $title)
+                ]
+            ]
+        );
+
     }
 )->conditions(array('book' => '.*'));
+
+
+$app->get(
+    '/:catchall',
+    function () use ($app) {
+        return $app->render('index.php');
+    }
+)->conditions(array('catchall' => '.*'));
+

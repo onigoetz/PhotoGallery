@@ -1,20 +1,20 @@
 /*global window */
 
 import React from 'react';
-import Gallery from 'react-photo-gallery';
 import ReactDOM from 'react-dom';
+import { Router, Route, browserHistory } from 'react-router'
 
-// Old Way
-window.ReactDOM = ReactDOM;
+// stateless components use main React
 window.React = React;
-window.Gallery = Gallery;
-
-if (window.scriptLoaded) {
-    window.scriptLoaded();
-}
 
 // New Way
 import Page from './components/Page';
+import GalleryPage from './components/GalleryPage';
 
-ReactDOM.render(<Page />, document.getElementById("app"));
+ReactDOM.render(
+    <Router history={browserHistory}>
+        <Route path={`${window.baseURL}/`} component={Page} />
+        <Route path={`${window.baseURL}/list/*`} component={Page} />
+        <Route path={`${window.baseURL}/gallery/*`} component={GalleryPage} />
+    </Router>, document.getElementById("app"));
 

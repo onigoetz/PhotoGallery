@@ -12,7 +12,7 @@ function getGallery() {
         $indexCreator = new IndexCreator(GALLERY_ROOT);
 
         $children = $indexCreator->getList();
-        $app->cache->store('GALLERY_FILES', IndexCreator::toCache($children), 0);
+        $app->cache->store('GALLERY_FILES', IndexCreator::toCache($children), 3600);
     }
 
     $home->setChildren($children);
